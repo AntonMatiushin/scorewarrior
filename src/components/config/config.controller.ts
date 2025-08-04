@@ -4,7 +4,7 @@ import { makeController, validateInput } from '@src/helpers/common.helper';
 import { EmptyObject } from '@src/types/common';
 import { TYPES } from '@src/ioc/types';
 import { GetConfigQueryParams } from '@src/components/config/config.interface';
-import { getConfigSchema } from '@src/components/config/config.validator';
+import { GetConfigInputSchemaValidator } from '@src/components/config/config.validator';
 import { ConfigService } from '@src/components/config/config.service';
 import { GeneralConfig } from '@src/config/config.interface';
 import { NotFoundError } from '@src/errors/errors.definitions';
@@ -28,7 +28,7 @@ export class ConfigController {
       req: Request<EmptyObject, EmptyObject, EmptyObject, GetConfigQueryParams>,
       res: Response,
     ) => {
-      validateInput(req.query, getConfigSchema);
+      validateInput(req.query, GetConfigInputSchemaValidator);
       const hash = this.generateConfigHash(req.query);
       const cached = this.configCache.get(hash);
       if (cached) {

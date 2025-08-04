@@ -8,6 +8,9 @@ import { flatten } from 'lodash';
 export class AssetRepository {
   private readonly collectionPath = './db/assets.json';
 
+  /**
+   * Depending on used data source here we'll support search conditions
+   */
   public async getAll(): Promise<AssetModel[]> {
     const buffer = await fsPromises.readFile(this.collectionPath, {
       encoding: 'utf-8',

@@ -29,7 +29,7 @@ export class ConfigService {
     platform: AppPlatform,
   ): Promise<AssetModel> {
     /**
-     * Depending on data source here should we "where" by platform in getAll
+     * Depending on data source here should be "where" supported by db
      */
     const allAssets = await this.assetRepo.getAll();
     return this.determine(allAssets, version, platform, this.rules.MAJOR);
@@ -40,7 +40,7 @@ export class ConfigService {
     platform: AppPlatform,
   ): Promise<DefinitionModel> {
     /**
-     * Depending on data source here should we "where" by platform in getAll
+     * Depending on data source here should be "where" supported by db
      */
     const allDefinitions = await this.definitionRepo.getAll();
     return this.determine(allDefinitions, version, platform, this.rules.MINOR);
@@ -52,9 +52,15 @@ export class ConfigService {
     platform: AppPlatform,
     fallbackRule: (version) => string | Range,
   ): T {
+    /**
+     * As requested in task we check first the same version
+     */
     const samePlatform = collection.filter((a) => a.platform === platform);
     const same = samePlatform.find((a) => satisfies(a.version, version));
 
+    /**
+     * and if it is not found we check fallback
+     */
     return (
       same ??
       collection.find((a) => satisfies(a.version, fallbackRule(version)))

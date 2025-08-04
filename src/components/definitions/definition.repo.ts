@@ -8,6 +8,9 @@ import { flatten } from 'lodash';
 export class DefinitionRepository {
   private readonly collectionPath = './db/definitions.json';
 
+  /**
+   * Depending on used data source here we'll support search conditions
+   */
   public async getAll(): Promise<DefinitionModel[]> {
     const buffer = await fsPromises.readFile(this.collectionPath, {
       encoding: 'utf-8',
