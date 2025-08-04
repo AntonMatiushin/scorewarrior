@@ -63,7 +63,7 @@ export class ConfigService {
      */
     return (
       same ??
-      collection.find((a) => satisfies(a.version, fallbackRule(version)))
+      samePlatform.find((a) => satisfies(a.version, fallbackRule(version)))
     );
   }
 }

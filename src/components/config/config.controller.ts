@@ -1,3 +1,4 @@
+import { pick } from "lodash";
 import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { makeController, validateInput } from '@src/helpers/common.helper';
@@ -51,11 +52,11 @@ export class ConfigController {
           jsonrpc_url: rpcUrls.backend,
         },
         assets: {
-          ...asset,
+          ...pick(asset, 'version', 'hash'),
           urls: await this.assetUrlRepo.getAll(),
         },
         definitions: {
-          ...definition,
+          ...pick(definition, 'version', 'hash'),
           urls: await this.definitionUrlRepo.getAll(),
         },
         notifications: {
